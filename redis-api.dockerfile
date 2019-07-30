@@ -4,10 +4,6 @@ FROM node:latest
 # adds maintainer metadata as a key-value pair
 LABEL mantainer="Luiz Fernando Assis <luizffga@dpi.inpe.br>"
 
-# sets the environment variable REDIS_HOST and REDIS_PORT
-ENV REDIS_HOST=
-ENV REDIS_PORT=6379
-
 # executes create directory of the src in a new layer on top of the current image and commit the results
 RUN mkdir -p /usr/src/
 
