@@ -1,0 +1,28 @@
+{
+  "name": "redis_api",
+  "version": "1.0.0",
+  "private": true,
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "compression": "^1.7.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "express-ipfilter": "^0.3.1",
+    "express-list-routes": "^0.1.4",
+    "fs": "0.0.1-security",
+    "ioredis": "^3.2.2",
+    "method-override": "^2.3.10",
+    "morgan": "^1.9.0",
+    "path": "^0.12.7",
+    "redis": "^2.8.0",
+    "redis-rejson": "^1.0.0"
+  }
+}
