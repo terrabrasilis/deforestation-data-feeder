@@ -1,3 +1,5 @@
+Original extracted from: https://github.com/junegunn/redis-stat/
+
 # redis-stat
 
 _redis-stat_ is a simple Redis monitoring tool written in Ruby.
