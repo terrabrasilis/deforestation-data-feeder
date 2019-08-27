@@ -2,14 +2,13 @@ package info.terrabrasilis.redis.feeder.dto;
 
 import java.io.Serializable;
 
-import javax.xml.bind.annotation.XmlRootElement;
+//import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * 
  * @author jether
  *
  */
-@XmlRootElement
 public final class ResponseMessage implements Serializable{
 
 	/**
