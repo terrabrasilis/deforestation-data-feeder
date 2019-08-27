@@ -26,7 +26,7 @@ public final class LoiVO implements Data, Serializable {
 	 * @param gid
 	 * @param name
 	 */
-	public LoiVO(Integer gid, String name) {
+	private LoiVO(Integer gid, String name) {
 		super();
 		this.gid = gid;
 		this.name = name;
@@ -36,7 +36,7 @@ public final class LoiVO implements Data, Serializable {
 	 * @param name
 	 * @param loinames
 	 */
-	public LoiVO(String name, List<Data> loinames) {
+	private LoiVO(String name, List<Data> loinames) {
 		super();
 		this.name = name;
 		this.loinames = loinames;
@@ -48,12 +48,14 @@ public final class LoiVO implements Data, Serializable {
 	 * @param name
 	 * @param loinames
 	 */
-	public LoiVO(Integer gid, String name, List<Data> loinames) {
-		super();
-		this.gid = gid;
-		this.name = name;
+	private LoiVO(Integer gid, String name, List<Data> loinames) {
+		this(gid, name);
 		this.loinames = loinames;
 	}
+        
+        public static final LoiVO of(Integer gid, String name, List<Data> loinames) {
+            return new LoiVO(gid, name, loinames);
+        }
 
 	public String getName() {
 		return name;

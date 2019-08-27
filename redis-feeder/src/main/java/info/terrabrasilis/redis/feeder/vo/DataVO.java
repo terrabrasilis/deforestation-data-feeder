@@ -28,7 +28,7 @@ public final class DataVO implements Data, Serializable {
 	 * @param name
 	 * @param periods
 	 */
-	public DataVO(String name, List<Data> periods) {
+	private DataVO(String name, List<Data> periods) {
 		super();
 		this.name = name;
 		this.periods = periods;
@@ -40,12 +40,14 @@ public final class DataVO implements Data, Serializable {
 	 * @param clazz
 	 * @param periods
 	 */
-	public DataVO(String name, String clazz, List<Data> periods) {
-		super();
-		this.name = name;
+	private DataVO(String name, String clazz, List<Data> periods) {
+                this(name, periods);
 		this.clazz = clazz;
-		this.periods = periods;
 	}
+        
+        public static final DataVO of(String name, String clazz, List<Data> periods) {
+            return new DataVO(name, clazz, periods);
+        }
 
 	public String getName() {
 		return name;

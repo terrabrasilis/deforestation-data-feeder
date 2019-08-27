@@ -18,8 +18,8 @@ public final class PeriodVO implements Data, Serializable {
 	 */
 	private static final long serialVersionUID = -3340462553232530494L;
 
-	private LocalDate startDate;
-	private LocalDate endDate;
+	private final LocalDate startDate;
+	private final LocalDate endDate;
 	private List<Data> features;
 
 	/**
@@ -27,7 +27,7 @@ public final class PeriodVO implements Data, Serializable {
 	 * @param startDate
 	 * @param endDate
 	 */
-	public PeriodVO(LocalDate startDate, LocalDate endDate) {
+	private PeriodVO(LocalDate startDate, LocalDate endDate) {
 		super();
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -36,14 +36,16 @@ public final class PeriodVO implements Data, Serializable {
 	/**
 	 * @param startDate
 	 * @param endDate
-	 * @param lois
+         * @param features
 	 */
-	public PeriodVO(LocalDate startDate, LocalDate endDate, List<Data> features) {
-		super();
-		this.startDate = startDate;
-		this.endDate = endDate;
+	private PeriodVO(LocalDate startDate, LocalDate endDate, List<Data> features) {
+		this(startDate, endDate);
 		this.features = features;
 	}
+        
+        public static final PeriodVO of(LocalDate startDate, LocalDate endDate, List<Data> features) {
+            return new PeriodVO(startDate, endDate, features);
+        }
 
 	public LocalDate getStartDate() {
 		return startDate;

@@ -16,16 +16,20 @@ public final class FeatureFilterVO implements Data, Serializable {
 	 */
 	private static final long serialVersionUID = 3190335038259204910L;
 	
-	private Integer loi;
-	private Integer loiname;
-	private AreaVO[] areas;
+	private final Integer loi;
+	private final Integer loiname;
+	private final AreaVO[] areas;
 	
-	public FeatureFilterVO(Integer loi, Integer loiname, AreaVO... areas) {
+	private FeatureFilterVO(Integer loi, Integer loiname, AreaVO... areas) {
 		super();
 		this.loi = loi;
 		this.loiname = loiname;
 		this.areas = areas;
 	}
+        
+        public static final FeatureFilterVO of(Integer loi, Integer loiname, AreaVO... areas) {
+            return new FeatureFilterVO(loi, loiname, areas);
+        }
 
 	public Integer getLoi() {
 		return loi;

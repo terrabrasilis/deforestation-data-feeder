@@ -22,13 +22,17 @@ public final class DataPeriodVO implements Serializable {
 	/**
 	 * 
 	 * @param data
-	 * @param periods2
+         * @param periods
 	 */
-	public DataPeriodVO(Data data, List<info.terrabrasilis.redis.feeder.interfaces.Data> periods) {
+	private DataPeriodVO(Data data, List<info.terrabrasilis.redis.feeder.interfaces.Data> periods) {
 		super();
 		this.data = data;
 		this.periods = periods;
 	}
+        
+        public static final DataPeriodVO of(Data data, List<info.terrabrasilis.redis.feeder.interfaces.Data> periods) {
+            return new DataPeriodVO(data, periods);
+        }
 
 	public Data getData() {
 		return data;

@@ -17,13 +17,17 @@ public final class DataLoisVO implements Serializable {
 	 */
 	private static final long serialVersionUID = 3505053332629270889L;
 	
-	private Data data;
-	private List<LoiVO> lois;
+	private final Data data;
+	private final List<LoiVO> lois;
 	
-	public DataLoisVO(Data data, List<LoiVO> lois) {
+	private DataLoisVO(Data data, List<LoiVO> lois) {
 		this.data = data;
 		this.lois = lois;
 	}
+        
+        public static final DataLoisVO of(Data data, List<LoiVO> lois) {
+            return new DataLoisVO(data, lois);
+        }
 
 	public Data getData() {
 		return data;

@@ -17,12 +17,15 @@ public final class AreaVO implements Serializable {
 	private Integer type;
 	private Double area;
 
-	public AreaVO(Integer type, Double area) {
-		super();
+	private AreaVO(Integer type, Double area) {
 		this.type = type;
 		this.area = area;
 	}
 
+        public static final AreaVO of(Integer type, Double area) {
+            return new AreaVO(type, area);
+        }
+        
 	public Integer getType() {
 		return type;
 	}

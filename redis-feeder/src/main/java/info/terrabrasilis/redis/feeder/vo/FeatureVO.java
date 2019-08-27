@@ -18,17 +18,21 @@ public final class FeatureVO implements Data, Serializable {
 	 */
 	private static final long serialVersionUID = 3705371968764723429L;
 
-	private Integer loi;
-	private Integer loiname;
-	private List<AreaVO> areas = new ArrayList<>();
+	private final Integer loi;
+	private final Integer loiname;
+	private final List<AreaVO> areas = new ArrayList<>();
 
-	public FeatureVO(Integer loi, Integer loiname, AreaVO... areas) {
+	private FeatureVO(Integer loi, Integer loiname, AreaVO... areas) {
 		super();
 		this.loi = loi;
 		this.loiname = loiname;
 
 		this.addAreasToAreasList(areas);
 	}
+        
+        public static final FeatureVO of(Integer loi, Integer loiname, AreaVO... areas) {
+            return new FeatureVO(loi, loiname, areas);
+        }
 
 	public Integer getLoi() {
 		return loi;
