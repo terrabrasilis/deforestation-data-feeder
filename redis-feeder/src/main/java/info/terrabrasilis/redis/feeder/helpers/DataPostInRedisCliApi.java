@@ -15,6 +15,8 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 
 import info.terrabrasilis.redis.feeder.interfaces.Writable;
+import java.io.Closeable;
+import java.io.IOException;
 
 /**
  * 
@@ -30,11 +32,11 @@ public class DataPostInRedisCliApi implements Writable, Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = -1321878743398427614L;
-	private static final Logger logger = LoggerFactory.getLogger(DataWriteInRedis.class);
-
-	@Override
+	private static final Logger LOGGER = LoggerFactory.getLogger(DataWriteInRedis.class);
+        
+        @Override
 	public void write(Object obj, String host) throws UnirestException {
-		logger.info("Start post data in the Redis: {}", LocalDateTime.now());
+		LOGGER.info("Start post data in the Redis: {}", LocalDateTime.now());
 		
 		HttpResponse<JsonNode> response= 
 				Unirest.post(host)
@@ -42,12 +44,12 @@ public class DataPostInRedisCliApi implements Writable, Serializable {
 					.body(new Gson().toJson(obj))
 					.asJson();
 		
-		logger.info("Finish post data in the Redis: {}.\n Response: {}", LocalDateTime.now(), response.getBody());
+		LOGGER.info("Finish post data in the Redis: {}.\n Response: {}", LocalDateTime.now(), response.getBody());
 	}
 	
 	@Override
 	public void write(Object obj, String host, String identifier) throws UnirestException {
-		logger.info("Start post data in the Redis: {}", LocalDateTime.now());
+		LOGGER.info("Start post data in the Redis: {}", LocalDateTime.now());
 		
 		HttpResponse<JsonNode> response= 
 				Unirest.post(host)
@@ -56,6 +58,11 @@ public class DataPostInRedisCliApi implements Writable, Serializable {
 					.body(new Gson().toJson(obj))
 					.asJson();
 		
-		logger.info("Finish post data in the Redis: {}.\n Response: {}", LocalDateTime.now(), response.getBody());
+		LOGGER.info("Finish post data in the Redis: {}.\n Response: {}", LocalDateTime.now(), response.getBody());
 	}
+
+    @Override
+    public void close() throws IOException {
+        Unirest.shutdown();
+    }
 }
