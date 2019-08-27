@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import info.terrabrasilis.redis.feeder.interfaces.Writable;
 import info.terrabrasilis.redis.feeder.service.JReJSONService;
+import java.io.IOException;
 
 /**
  * 
@@ -35,5 +36,4 @@ public class DataWriteInRedis implements Writable, Serializable {
 		
 		logger.info("Finish send data to Redis: {}", LocalDateTime.now());
 	}
-
 }
