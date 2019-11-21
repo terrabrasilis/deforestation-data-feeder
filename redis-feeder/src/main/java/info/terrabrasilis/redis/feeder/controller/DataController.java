@@ -64,6 +64,8 @@ public class DataController implements Serializable {
         @Autowired private final FilterVOService filterVOService;
 	
 	@Autowired @Qualifier("dataPostInRedisCliApi") private final Writable writable;
+        // try write to disk
+        //@Autowired @Qualifier("dataWriteJsonInDisk") private final Writable writable;
 
         public DataController(DataService dataService, PeriodService periodService, FeatureVOService featureVOService, DataClazzService dataClassService, LoiVOService loiVOService, LoinamesVOService loinamesVOService, DataClazzService dataClazzService, Writable writable, FilterVOService filterVOService) {
             this.dataService = dataService;
@@ -79,8 +81,9 @@ public class DataController implements Serializable {
 
 	/**
 	 * This service will post DATA by CLASS and PERIOD in REDIS by API
-	 */	
-        @Scheduled(cron = "0 15 23 * * *")
+         * @Scheduled(cron = "0 15 23 * * *")
+	 */
+        @Scheduled(cron = "0 22 * * * *")
 	public void redisDataFeeder() {
             LOGGER.info("Starting RedisDataFeeder: {}", LocalDateTime.now());
 
@@ -117,7 +120,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_CLASS in REDIS by API
 	 */	
-        @Scheduled(cron = "0 3 * * * *")
+        @Scheduled(cron = "0 3 23 * * *")
 	public void redisDataClassFeeder() {
             LOGGER.info("Starting RedisDataClassFeeder: {}", LocalDateTime.now());
 
@@ -140,7 +143,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_PERIODS in REDIS by API
 	 */	
-        @Scheduled(cron = "0 5 * * * *")
+        @Scheduled(cron = "0 15 23 * * *")
 	public void redisDataPeriodFeeder() {
             LOGGER.info("Starting RedisDataPeriodFeeder: {}", LocalDateTime.now());
 
@@ -162,7 +165,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_LOI in REDIS by API
 	 */
-        @Scheduled(cron = "0 7 * * * *")
+        @Scheduled(cron = "0 7 23 * * *")
 	public void redisDataLoisFeeder() {
             LOGGER.info("Starting RedisDataLoisFeeder: {}", LocalDateTime.now());
 
@@ -183,7 +186,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_LOI_LOINAMES in REDIS by API
 	 */
-        @Scheduled(cron = "0 10 * * * *")
+        @Scheduled(cron = "0 10 23 * * *")
 	public void redisDataLoiLoinamesFeeder() {
             LOGGER.info("Starting RedisDataLoiLoinamesFeeder: {}", LocalDateTime.now());
 
@@ -207,7 +210,7 @@ public class DataController implements Serializable {
         /**
 	 * This service will post DATA_FILTERS in REDIS by API
 	 */
-        @Scheduled(cron = "0 15 * * * *")
+        @Scheduled(cron = "0 15 23 * * *")
         public void redisDataFilter() {
             LOGGER.info("Starting RedisDataFilter: {}", LocalDateTime.now());
             

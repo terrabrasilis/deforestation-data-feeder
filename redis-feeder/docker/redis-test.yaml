@@ -6,7 +6,7 @@ services:
     ports:
       - '6379:6379'
     volumes:
-      - "/home/jether/Downloads/dockerdb/redis:/data"
+      - "/home/andre/Dados/tmp/redisdb:/data"
     #entrypoint: redis-server --appendonly yes
   
   redis-api:
@@ -15,6 +15,6 @@ services:
       - '3000:3000'
     depends_on:
       - redis
-    environment:         
+    environment:
       - REDIS_HOST=redis
       - REDIS_PORT=6379
