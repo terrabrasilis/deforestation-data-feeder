@@ -11,6 +11,7 @@ services:
   
   redis-api:
     image: terrabrasilis/redis-api:v01
+    container_name: redisapi
     ports:
       - '3000:3000'
     depends_on:
