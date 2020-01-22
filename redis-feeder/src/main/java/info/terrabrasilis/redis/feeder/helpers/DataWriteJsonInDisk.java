@@ -35,9 +35,32 @@ public class DataWriteJsonInDisk implements Writable, Serializable {
 		logger.info("Start write json in disk: {}", LocalDateTime.now());
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append(System.getProperty("java.io.tmpdir"))
+		// builder.append(System.getProperty("java.io.tmpdir"))
+		builder.append("/tmp/")
 			   .append(File.separator)
 			   .append(String.join(".", key, "json"));
+		
+		File json = new File(builder.toString());
+		
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(json))) {
+			writer.write(new Gson().toJson(data));	
+		} catch (IOException writerException) {
+			logger.error("Error on try to write in file: {}", writerException.getMessage());
+		} 
+		
+		logger.info("Finish write json in disk: {}. Path: {}", LocalDateTime.now(), json.toPath());
+	}
+
+	@Override
+	public void write(Object data, String host, String key) {
+		logger.info("Start write json in disk: {}", LocalDateTime.now());
+		
+		StringBuilder builder = new StringBuilder();
+		// builder.append(System.getProperty("java.io.tmpdir"))
+		builder.append("/tmp/")
+				.append(host)
+				.append(File.separator)
+				.append(String.join(".", key, "json"));
 		
 		File json = new File(builder.toString());
 		
