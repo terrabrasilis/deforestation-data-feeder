@@ -27,6 +27,8 @@ import info.terrabrasilis.redis.feeder.service.ApplicationService;
 @EnableScheduling
 public class RedisController implements Serializable {
 
+	private static final String TIME_ZONE = "America/Sao_Paulo";
+
 	/**
 	 * 
 	 */
@@ -49,7 +51,7 @@ public class RedisController implements Serializable {
 		this.applicationDataService = applicationDataService;
 	}
 	
-	@Scheduled(cron = "0 */5 * * * *")
+	@Scheduled(cron = "0 05 * * * *")
     public void findAllApplicationAndPopulateInRedis() {
     	logger.info("Starting ApplicationRedisFeeder. {}", LocalDateTime.now());
     	this.applicationDataService.save(

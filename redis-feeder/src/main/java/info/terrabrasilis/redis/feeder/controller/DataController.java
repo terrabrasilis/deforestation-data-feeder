@@ -47,6 +47,8 @@ import java.util.Collections;
 @EnableScheduling
 public class DataController implements Serializable {
 
+        private static final String TIME_ZONE = "America/Sao_Paulo";
+
 	/**
 	 * 
 	 */
@@ -80,10 +82,118 @@ public class DataController implements Serializable {
         }
 
 	/**
+	 * This service will post DATA_CLASS in REDIS by API
+	 */	
+        @Scheduled(cron = "0 08 16 * * *")
+	public void redisDataClassFeeder() {
+            LOGGER.info("Starting RedisDataClassFeeder: {}", LocalDateTime.now());
+
+            dataService.findAll().forEach(data -> {
+                    List<Clazz> classes = new ArrayList<>();
+                    dataClassService.findAllByData(data).forEach(dataClass -> {								
+                            classes.add(dataClass.getClazz());				
+                    });
+
+                    try {
+                            writable.write(DataClassVO.of(data, classes), DATA_LOI + "classes", data.getName().replaceAll(" ", "_").toLowerCase());
+                    } catch (Exception e) {
+                            LOGGER.error("Error: {}", e.getMessage());
+                    }
+            });
+
+            LOGGER.info("Finishing RedisDataClassFeeder: {}", LocalDateTime.now());
+	}
+	
+	/**
+	 * This service will post DATA_PERIODS in REDIS by API
+	 */	
+        @Scheduled(cron = "0 10 16 * * *")
+	public void redisDataPeriodFeeder() {
+            LOGGER.info("Starting RedisDataPeriodFeeder: {}", LocalDateTime.now());
+
+            dataService.findAll().forEach(data -> {	
+                    List<Data> periods = periodService.findAllByData(data).stream()
+                                                                    .map(p -> {
+                                                                            return PeriodVO.of(p.getStartDate(), p.getEndDate(), Collections.emptyList());
+                                                                    }).collect(Collectors.toList());
+                    try {
+                            writable.write(DataPeriodVO.of(data, periods), DATA_LOI + "periods", data.getName().replaceAll(" ", "_").toLowerCase());
+                    } catch (Exception e) {
+                            LOGGER.error("Error: {}", e.getMessage());
+                    }
+            });
+
+            LOGGER.info("Finishing RedisDataPeriodFeeder: {}", LocalDateTime.now());
+	}
+	
+	/**
+	 * This service will post DATA_LOI in REDIS by API
+	 */
+        @Scheduled(cron = "0 12 16 * * *")
+	public void redisDataLoisFeeder() {
+            LOGGER.info("Starting RedisDataLoisFeeder: {}", LocalDateTime.now());
+
+            dataService.findAll().forEach(data -> {						
+                    try {				
+                            writable.write(DataLoisVO.of(
+                                            data
+                                            , loiVOService.findAllByData(data.getId())), DATA_LOI + "lois"
+                                            , data.getName().replaceAll(" ", "_").toLowerCase());
+                    } catch (Exception e) {
+                            LOGGER.error("Error: {}", e.getMessage());
+                    }
+            });
+
+            LOGGER.info("Finishing RedisDataLoisFeeder: {}", LocalDateTime.now());
+	}
+	
+	/**
+	 * This service will post DATA_LOI_LOINAMES in REDIS by API
+	 */
+        @Scheduled(cron = "0 15 16 * * *")
+	public void redisDataLoiLoinamesFeeder() {
+            LOGGER.info("Starting RedisDataLoiLoinamesFeeder: {}", LocalDateTime.now());
+
+            dataService.findAll().forEach(data -> {
+                    List<LoiVO> lois = new ArrayList<>();
+
+                    loiVOService.findAllByData(data.getId()).forEach(loi -> {					
+                            lois.add(LoiVO.of(loi.getGid(), loi.getName(), loinamesVOService.findAllByLoi(loi.getGid(), data.getId())));
+                    });		
+
+                    try {
+                            writable.write(DataLoiLoinamesVO.of(data, lois), DATA_LOI + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
+                    } catch (Exception e) {
+                            LOGGER.error("Error: {}", e.getMessage());
+                    }
+            });
+
+            LOGGER.info("Finishing RedisDataLoiLoinamesFeeder: {}", LocalDateTime.now());
+	}
+        
+        /**
+	 * This service will post DATA_FILTERS in REDIS by API
+	 */
+        @Scheduled(cron = "0 18 16 * * *")
+        public void redisDataFilter() {
+            LOGGER.info("Starting RedisDataFilter: {}", LocalDateTime.now());
+            
+            dataService.findAll().forEach(data -> {
+                try {
+                    writable.write(DataFilterVO.of(data, filterVOService.findAllByData(data.getId())), DATA_FILTER + "filters", data.getName().replaceAll(" ", "_").toLowerCase());
+                } catch (Exception e) {
+                    LOGGER.error("Error: {}", e.getMessage());
+                }
+            });
+            
+            LOGGER.info("Starting RedisDataFilter: {}", LocalDateTime.now());
+        }
+
+	/**
 	 * This service will post DATA by CLASS and PERIOD in REDIS by API
          * @Scheduled(cron = "0 15 23 * * *")
 	 */
-        @Scheduled(cron = "0 35 19 * * *")
+        @Scheduled(cron = "0 20 16 * * *")
 	public void redisDataFeeder() {
             LOGGER.info("Starting RedisDataFeeder: {}", LocalDateTime.now());
 
@@ -116,112 +226,5 @@ public class DataController implements Serializable {
 
             LOGGER.info("Finishing RedisDataFeeder: {}", LocalDateTime.now());
 	}
-	
-	/**
-	 * This service will post DATA_CLASS in REDIS by API
-	 */	
-        @Scheduled(cron = "0 10 19 * * *")
-	public void redisDataClassFeeder() {
-            LOGGER.info("Starting RedisDataClassFeeder: {}", LocalDateTime.now());
 
-            dataService.findAll().forEach(data -> {
-                    List<Clazz> classes = new ArrayList<>();
-                    dataClassService.findAllByData(data).forEach(dataClass -> {								
-                            classes.add(dataClass.getClazz());				
-                    });
-
-                    try {
-                            writable.write(DataClassVO.of(data, classes), DATA_LOI + "classes", data.getName().replaceAll(" ", "_").toLowerCase());
-                    } catch (Exception e) {
-                            LOGGER.error("Error: {}", e.getMessage());
-                    }
-            });
-
-            LOGGER.info("Finishing RedisDataClassFeeder: {}", LocalDateTime.now());
-	}
-	
-	/**
-	 * This service will post DATA_PERIODS in REDIS by API
-	 */	
-        @Scheduled(cron = "0 15 19 * * *")
-	public void redisDataPeriodFeeder() {
-            LOGGER.info("Starting RedisDataPeriodFeeder: {}", LocalDateTime.now());
-
-            dataService.findAll().forEach(data -> {	
-                    List<Data> periods = periodService.findAllByData(data).stream()
-                                                                    .map(p -> {
-                                                                            return PeriodVO.of(p.getStartDate(), p.getEndDate(), Collections.emptyList());
-                                                                    }).collect(Collectors.toList());
-                    try {
-                            writable.write(DataPeriodVO.of(data, periods), DATA_LOI + "periods", data.getName().replaceAll(" ", "_").toLowerCase());
-                    } catch (Exception e) {
-                            LOGGER.error("Error: {}", e.getMessage());
-                    }
-            });
-
-            LOGGER.info("Finishing RedisDataPeriodFeeder: {}", LocalDateTime.now());
-	}
-	
-	/**
-	 * This service will post DATA_LOI in REDIS by API
-	 */
-        @Scheduled(cron = "0 20 19 * * *")
-	public void redisDataLoisFeeder() {
-            LOGGER.info("Starting RedisDataLoisFeeder: {}", LocalDateTime.now());
-
-            dataService.findAll().forEach(data -> {						
-                    try {				
-                            writable.write(DataLoisVO.of(
-                                            data
-                                            , loiVOService.findAllByData(data.getId())), DATA_LOI + "lois"
-                                            , data.getName().replaceAll(" ", "_").toLowerCase());
-                    } catch (Exception e) {
-                            LOGGER.error("Error: {}", e.getMessage());
-                    }
-            });
-
-            LOGGER.info("Finishing RedisDataLoisFeeder: {}", LocalDateTime.now());
-	}
-	
-	/**
-	 * This service will post DATA_LOI_LOINAMES in REDIS by API
-	 */
-        @Scheduled(cron = "0 25 19 * * *")
-	public void redisDataLoiLoinamesFeeder() {
-            LOGGER.info("Starting RedisDataLoiLoinamesFeeder: {}", LocalDateTime.now());
-
-            dataService.findAll().forEach(data -> {
-                    List<LoiVO> lois = new ArrayList<>();
-
-                    loiVOService.findAllByData(data.getId()).forEach(loi -> {					
-                            lois.add(LoiVO.of(loi.getGid(), loi.getName(), loinamesVOService.findAllByLoi(loi.getGid(), data.getId())));
-                    });		
-
-                    try {
-                            writable.write(DataLoiLoinamesVO.of(data, lois), DATA_LOI + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
-                    } catch (Exception e) {
-                            LOGGER.error("Error: {}", e.getMessage());
-                    }
-            });
-
-            LOGGER.info("Finishing RedisDataLoiLoinamesFeeder: {}", LocalDateTime.now());
-	}
-        
-        /**
-	 * This service will post DATA_FILTERS in REDIS by API
-	 */
-        @Scheduled(cron = "0 30 19 * * *")
-        public void redisDataFilter() {
-            LOGGER.info("Starting RedisDataFilter: {}", LocalDateTime.now());
-            
-            dataService.findAll().forEach(data -> {
-                try {
-                    writable.write(DataFilterVO.of(data, filterVOService.findAllByData(data.getId())), DATA_FILTER + "filters", data.getName().replaceAll(" ", "_").toLowerCase());
-                } catch (Exception e) {
-                    LOGGER.error("Error: {}", e.getMessage());
-                }
-            });
-            
-            LOGGER.info("Starting RedisDataFilter: {}", LocalDateTime.now());
-        }
 }

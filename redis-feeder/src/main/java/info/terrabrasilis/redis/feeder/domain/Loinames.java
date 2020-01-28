@@ -31,6 +31,9 @@ public class Loinames implements Serializable {
 
 	@Column(name = "name")
 	private String name;
+
+	@Column(name = "codibge")
+	private String codibge;
 	
 	public Integer getGid() {
 		return gid;
@@ -46,6 +49,14 @@ public class Loinames implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getCodibge() {
+		return codibge;
+	}
+
+	public void setCodibge(String codibge) {
+		this.codibge = codibge;
 	}
 
 }

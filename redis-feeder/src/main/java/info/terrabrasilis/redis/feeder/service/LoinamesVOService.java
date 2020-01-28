@@ -29,7 +29,7 @@ public class LoinamesVOService implements Serializable {
 	
 	public List<Data> findAllByLoi(Integer idLoi, Integer idData) {
 		StringBuilder sql = new StringBuilder();
-		sql.append("select l.gid, l.name from data_loi_loinames as ll ")
+		sql.append("select l.gid, l.name, l.codibge from data_loi_loinames as ll ")
 			.append(" inner join loi_loinames as lns on (ll.id_loi_loinames = lns.id AND lns.id_loi = ?) ")
 			.append(" inner join loinames l on (lns.gid_loinames = l.gid) ")
 			.append(" where ll.id_data = ?")
@@ -38,7 +38,7 @@ public class LoinamesVOService implements Serializable {
 		return dsl.fetch(sql.toString(), idLoi, idData)
 				.stream()
 				.map(rs -> {
-					return new LoinamesVO((Integer) rs.get("gid"), (String) rs.get("name"));
+					return new LoinamesVO((Integer) rs.get("gid"), (String) rs.get("name"), (Integer) rs.get("codibge"));
 				}).collect(Collectors.toCollection(ArrayList::new));
 	}
 

@@ -18,16 +18,18 @@ public final class LoinamesVO implements Data, Serializable {
 	
 	private Integer gid;
 	private String loiname;
+	private Integer codibge;
 	private Double area;
 	
 	/**
 	 * @param gid
 	 * @param loiname
 	 */
-	public LoinamesVO(Integer gid, String loiname) {
+	public LoinamesVO(Integer gid, String loiname, Integer codibge) {
 		super();
 		this.gid = gid;
 		this.loiname = loiname;
+		this.codibge = codibge;
 	}
 
 	/**
@@ -42,6 +44,10 @@ public final class LoinamesVO implements Data, Serializable {
 
 	public String getLoiname() {
 		return loiname;
+	}
+
+	public Integer getCodibge() {
+		return codibge;
 	}
 
 	public Double getArea() {
