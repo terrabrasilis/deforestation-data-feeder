@@ -20,7 +20,7 @@
     "fs": "0.0.1-security",
     "ioredis": "^3.2.2",
     "method-override": "^2.3.10",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
     "path": "^0.12.7",
     "redis": "^2.8.0",
     "redis-rejson": "^1.0.0"
