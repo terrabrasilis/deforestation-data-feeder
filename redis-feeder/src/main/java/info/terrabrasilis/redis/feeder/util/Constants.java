@@ -12,7 +12,7 @@ public final class Constants implements Serializable {
 	private static final long serialVersionUID = -8752276783418832709L;
 	
 	//private static final String HOST = System.getProperty("API_NODE_HOST");
-    private static final String HOST = "http://150.163.17.103:3000";
+    private static final String HOST = "http://192.168.0.108:3000";
 	//private static final String HOST = "";// used to write JSON files to disk. See DataWriteJsonInDisk.java
 	
 	/**

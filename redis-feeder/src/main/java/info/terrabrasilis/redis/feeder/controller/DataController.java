@@ -84,7 +84,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_CLASS in REDIS by API
 	 */	
-        @Scheduled(cron = "0 08 16 * * *")
+        @Scheduled(cron = "0 08 20 * * *")
 	public void redisDataClassFeeder() {
             LOGGER.info("Starting RedisDataClassFeeder: {}", LocalDateTime.now());
 
@@ -107,7 +107,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_PERIODS in REDIS by API
 	 */	
-        @Scheduled(cron = "0 10 16 * * *")
+        @Scheduled(cron = "0 10 20 * * *")
 	public void redisDataPeriodFeeder() {
             LOGGER.info("Starting RedisDataPeriodFeeder: {}", LocalDateTime.now());
 
@@ -129,7 +129,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_LOI in REDIS by API
 	 */
-        @Scheduled(cron = "0 12 16 * * *")
+        @Scheduled(cron = "0 12 20 * * *")
 	public void redisDataLoisFeeder() {
             LOGGER.info("Starting RedisDataLoisFeeder: {}", LocalDateTime.now());
 
@@ -150,7 +150,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_LOI_LOINAMES in REDIS by API
 	 */
-        @Scheduled(cron = "0 15 16 * * *")
+        @Scheduled(cron = "0 15 20 * * *")
 	public void redisDataLoiLoinamesFeeder() {
             LOGGER.info("Starting RedisDataLoiLoinamesFeeder: {}", LocalDateTime.now());
 
@@ -174,7 +174,7 @@ public class DataController implements Serializable {
         /**
 	 * This service will post DATA_FILTERS in REDIS by API
 	 */
-        @Scheduled(cron = "0 18 16 * * *")
+        @Scheduled(cron = "0 18 20 * * *")
         public void redisDataFilter() {
             LOGGER.info("Starting RedisDataFilter: {}", LocalDateTime.now());
             
@@ -193,7 +193,7 @@ public class DataController implements Serializable {
 	 * This service will post DATA by CLASS and PERIOD in REDIS by API
          * @Scheduled(cron = "0 15 23 * * *")
 	 */
-        @Scheduled(cron = "0 20 16 * * *")
+        @Scheduled(cron = "0 20 20 * * *")
 	public void redisDataFeeder() {
             LOGGER.info("Starting RedisDataFeeder: {}", LocalDateTime.now());
 
