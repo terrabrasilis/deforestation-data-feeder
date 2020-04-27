@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
+// import org.springframework.scheduling.annotation.EnableScheduling;
+// import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 import info.terrabrasilis.redis.feeder.domain.Application;
@@ -24,7 +24,7 @@ import info.terrabrasilis.redis.feeder.service.ApplicationService;
  *
  */
 @Controller
-@EnableScheduling
+//@EnableScheduling
 public class RedisController implements Serializable {
 
 	private static final String TIME_ZONE = "America/Sao_Paulo";
@@ -51,18 +51,18 @@ public class RedisController implements Serializable {
 		this.applicationDataService = applicationDataService;
 	}
 	
-	@Scheduled(cron = "0 05 * * * *")
-    public void findAllApplicationAndPopulateInRedis() {
-    	logger.info("Starting ApplicationRedisFeeder. {}", LocalDateTime.now());
-    	this.applicationDataService.save(
-    			this.applicationService.findAll()
-	    			.parallelStream()
-					.map(new Function<Application, ApplicationData>() {
-						@Override
-						public ApplicationData apply(Application t) {
-							return new ApplicationData(t);
-						}})
-					.collect(Collectors.toCollection(ArrayList::new)));
-    	logger.info("Finishing ApplicationRedisFeeder. {}", LocalDateTime.now());
-    }
+	//@Scheduled(cron = "0 05 * * * *")
+	public void findAllApplicationAndPopulateInRedis() {
+		logger.info("Starting ApplicationRedisFeeder. {}", LocalDateTime.now());
+		this.applicationDataService.save(
+				this.applicationService.findAll()
+					.parallelStream()
+				.map(new Function<Application, ApplicationData>() {
+					@Override
+					public ApplicationData apply(Application t) {
+						return new ApplicationData(t);
+					}})
+				.collect(Collectors.toCollection(ArrayList::new)));
+		logger.info("Finishing ApplicationRedisFeeder. {}", LocalDateTime.now());
+	}
 }

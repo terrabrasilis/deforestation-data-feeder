@@ -1,0 +1,33 @@
+version: '3.3'
+services:
+  redis:
+    image: terrabrasilis/redis:v01
+    container_name: redisdb
+    ports:
+      - '6379:6379'
+    volumes:
+      - "/home/andre/Dados/tmp/redisdb:/data"
+
+  redis-api:
+    image: terrabrasilis/redis-api:v01
+    container_name: redisapi
+    ports:
+      - "3000:3000"
+    links:
+      - redis
+    restart: always
+    # environment:
+    #   DASHBOARD_API_PORT: 3000
+    #   DASHBOARD_API_REDIS_HOST: redisdb
+    #   DASHBOARD_API_REDIS_PORT: 6379
+    # environment:
+    #   - REDIS_HOST=redis
+    #   - REDIS_PORT=6379
+
+  redis-feeder:
+    image: terrabrasilis/redis-feeder:v1.0.4
+    container_name: feeder
+    ports:
+      - "8090:8080"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
