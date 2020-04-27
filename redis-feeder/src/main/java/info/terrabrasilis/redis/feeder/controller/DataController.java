@@ -14,8 +14,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
+//import org.springframework.scheduling.annotation.EnableScheduling;
+//import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 import info.terrabrasilis.redis.feeder.domain.Clazz;
@@ -44,7 +44,7 @@ import java.util.Collections;
  * @author jether.rodrigues
  */
 @Controller
-@EnableScheduling
+//@EnableScheduling
 public class DataController implements Serializable {
 
         private static final String TIME_ZONE = "America/Sao_Paulo";
@@ -84,7 +84,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_CLASS in REDIS by API
 	 */	
-        @Scheduled(cron = "0 08 20 * * *")
+        //@Scheduled(cron = "0 08 20 * * *")
 	public void redisDataClassFeeder() {
             LOGGER.info("Starting RedisDataClassFeeder: {}", LocalDateTime.now());
 
@@ -107,7 +107,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_PERIODS in REDIS by API
 	 */	
-        @Scheduled(cron = "0 10 20 * * *")
+        //@Scheduled(cron = "0 10 20 * * *")
 	public void redisDataPeriodFeeder() {
             LOGGER.info("Starting RedisDataPeriodFeeder: {}", LocalDateTime.now());
 
@@ -129,7 +129,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_LOI in REDIS by API
 	 */
-        @Scheduled(cron = "0 12 20 * * *")
+        //@Scheduled(cron = "0 12 20 * * *")
 	public void redisDataLoisFeeder() {
             LOGGER.info("Starting RedisDataLoisFeeder: {}", LocalDateTime.now());
 
@@ -150,7 +150,7 @@ public class DataController implements Serializable {
 	/**
 	 * This service will post DATA_LOI_LOINAMES in REDIS by API
 	 */
-        @Scheduled(cron = "0 15 20 * * *")
+        //@Scheduled(cron = "0 15 20 * * *")
 	public void redisDataLoiLoinamesFeeder() {
             LOGGER.info("Starting RedisDataLoiLoinamesFeeder: {}", LocalDateTime.now());
 
@@ -174,7 +174,7 @@ public class DataController implements Serializable {
         /**
 	 * This service will post DATA_FILTERS in REDIS by API
 	 */
-        @Scheduled(cron = "0 18 20 * * *")
+        //@Scheduled(cron = "0 18 20 * * *")
         public void redisDataFilter() {
             LOGGER.info("Starting RedisDataFilter: {}", LocalDateTime.now());
             
@@ -193,7 +193,7 @@ public class DataController implements Serializable {
 	 * This service will post DATA by CLASS and PERIOD in REDIS by API
          * @Scheduled(cron = "0 15 23 * * *")
 	 */
-        @Scheduled(cron = "0 20 20 * * *")
+        //@Scheduled(cron = "0 20 20 * * *")
 	public void redisDataFeeder() {
             LOGGER.info("Starting RedisDataFeeder: {}", LocalDateTime.now());
 
