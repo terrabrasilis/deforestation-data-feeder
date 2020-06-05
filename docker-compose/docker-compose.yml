@@ -24,6 +24,7 @@ services:
     #   - REDIS_HOST=redis
     #   - REDIS_PORT=6379
 
+  # The new version 1.0.4 is used to push only once to redisdb
   redis-feeder:
     image: terrabrasilis/redis-feeder:v1.0.4
     container_name: feeder
