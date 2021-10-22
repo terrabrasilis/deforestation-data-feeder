@@ -82,9 +82,11 @@ public class FeatureVOService implements Serializable {
 
             filterMap.put(id, type);
 
-            builder.append(" SUM(CASE WHEN ( ")
-                   .append(type)
-                   .append(" ) THEN fid_area ELSE 0 END) AS ")
+            // builder.append(" SUM(CASE WHEN ( ")
+            //        .append(type)
+            //        .append(" ) THEN fid_area ELSE 0 END) AS ")
+            //        .append(filterName);
+            builder.append(" SUM( fid_area ) AS ")
                    .append(filterName);
 
             if(index < (records.size() - 1)) builder.append(", ");
