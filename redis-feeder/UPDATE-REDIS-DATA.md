@@ -4,7 +4,7 @@ We suppose that the environment and all needed docker images is ok.
 
 Loading data from Postgres database and putting into redis, follow this:
 
- > Remove old appendonly.aof (my file is in /home/andre/Dados/tmp/redisdb)
+ > Remove old appendonly.aof (my file is in /home/andre/Dados/tmp/redisdb because this is the local path defined as volume in docker-compose.yml)
 
  > Go to the /docker-compose/ directory into root of this project and run the docker-compose file;
   ```sh
