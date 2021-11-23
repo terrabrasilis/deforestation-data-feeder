@@ -13,3 +13,7 @@ GeoJSONs is a collection of geographic data to display the LOIs on dashboard emb
 Goto the ./data-api/LOIS_geojson_for_map/ and run the ./CURL_POST_by_loinames.sh script.
 
 To prepare the GeoJSON data, see instructions in ./data-api/LOIS_geojson_for_map/README.md
+
+# Redis API
+
+Get details in the [redis-api/README](./redis-api/README.md) file
