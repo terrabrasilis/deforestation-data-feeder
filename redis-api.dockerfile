@@ -14,8 +14,7 @@ WORKDIR /usr/src
 ADD redis-api ./
 
 # executes installation in production as well as of nodemon using npm in a new layer on top of the current image and commit the results
-RUN npm install --only=production
-RUN npm install -g nodemon
+RUN npm install --only=production && npm install -g nodemon
 
 # listens on the specified network port at runtime
 EXPOSE 3000
