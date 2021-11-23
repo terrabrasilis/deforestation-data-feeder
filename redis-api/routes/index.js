@@ -8,21 +8,13 @@ var router = express.Router();
 var data_wrapper = require('../controllers/data-wrapper');
 var apps_wrapper = require('../controllers/apps-wrapper');
 var config_wrapper = require('../controllers/config-wrapper');
+var status_wrapper = require('../controllers/status-wrapper');
 
 // define api version
 const version = "/v1";
 
 // get healthy api
-router.get('/', function(req, res, next) {
-    
-    // set response header
-    res.setHeader('Content-Type', 'application/json; charset=utf-8');
-    res.setHeader('Access-Control-Allow-Origin', '*');
-
-    // send api healthy 
-    res.send({"healthy": true}); 
-
-});
+router.use('/health', status_wrapper.is_connected);
 
 // define api for apps identifier
 router.get(version+'/redis-cli/apps/identifier', apps_wrapper.get_apps_ids);
