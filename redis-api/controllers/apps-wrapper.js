@@ -11,7 +11,7 @@ exports.get_apps_ids = function(req, res, next) {
             res.status(404).send('{code: 404, message: "Not Found"}');
         } else {             
             // send json answer
-            res.send(payload);            
+            res.send(payload);
         }
   
     });
@@ -26,7 +26,7 @@ exports.post_apps_ids = function(req, res, next) {
         if(err)
             res.status(400).send('{code: 400, message: "Bad Request"}');
         else
-           res.status(200).send('{code: 200, message: "OK"}');  
+            res.status(200).send('{code: 200, message: "OK"}');  
       });
   
 }

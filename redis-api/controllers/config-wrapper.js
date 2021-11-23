@@ -23,14 +23,14 @@ exports.get_loinames_queryable = function(req, res, next) {
         let appId = api_calls.check_app_identifier(req, res, next);
         if (!appId) {
             res.status(404).send('{code: 404, message: "Not Found"}');
-            return;
+            
         }
     
         const loi = req.query.loi;
         if (!loi) { 
             // response based on status - 401 Not Allowed
             res.status(400).send('{code: 400, message: "Bad Request"}');
-            return;
+            
         }
                 
         // concat app and data identifier examplary id: "prodes_amazon_rates"
@@ -65,7 +65,7 @@ exports.get_config_ids = function(req, res, next) {
     let appId = api_calls.check_app_identifier(req, res, next);
     if (!appId) {
         res.status(404).send('{code: 404, message: "Not Found"}');
-        return;
+        
     }
 
     // get data identifier from request
@@ -74,7 +74,7 @@ exports.get_config_ids = function(req, res, next) {
     if (!configId) { 
         //  response based on status - 400 Bad Request or 402 Required id        
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     }
 
     // concat app and data identifier examplary id: "prodes_amazon_rates"
@@ -102,7 +102,7 @@ exports.post_config_ids = function(req, res, next) {
     let appId = api_calls.check_app_identifier(req, res, next);
     if (!appId) {
         res.status(404).send('{code: 404, message: "Not Found"}');
-        return;
+        
     }
 
     // get config identifier from request
@@ -111,7 +111,7 @@ exports.post_config_ids = function(req, res, next) {
     if (!configId) { 
         //  response based on status - 400 Bad Request or 402 Required id        
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     }
 
     // concat app and data identifier examplary id: "prodes_amazon_rates"
@@ -134,7 +134,7 @@ exports.del_config_ids = function(req, res, next) {
     let appId = api_calls.check_app_identifier(req, res, next);
     if (!appId) {
         res.status(404).send('{code: 404, message: "Not Found"}');
-        return;
+        
     }
 
     // get data identifier from request
@@ -143,7 +143,7 @@ exports.del_config_ids = function(req, res, next) {
     if (!configId) { 
         //  response based on status - 400 Bad Request or 402 Required id        
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     }
 
     // concat app and data identifier examplary id: "prodes_amazon_rates"

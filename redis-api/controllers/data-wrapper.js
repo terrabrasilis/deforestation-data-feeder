@@ -23,26 +23,26 @@ exports.get_data_queryable = function(req, res, next) {
     let appId = api_calls.check_app_identifier(req, res, next);
     if (!appId) {
         res.status(404).send('{code: 404, message: "Not Found"}');
-        return;
+        
     }
 
     const loiname = req.query.loiname;
     if (!loiname) { 
         // response based on status - 401 Not Allowed
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     }
     
     const startdate = req.query.startdate;    
     if (!startdate) { 
         // response based on status - 401 Not Allowed
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     } else {
         parseStartDate = new Date(startdate); //moment.ISO_8601
         if (!(parseStartDate instanceof Date && !isNaN(parseStartDate))) { // check valid date        
             res.status(400).send('{code: 400, message: "Bad Request"}');
-            return;
+            
         }
     }
     
@@ -50,12 +50,12 @@ exports.get_data_queryable = function(req, res, next) {
     if (!enddate) { 
         // response based on status - 401 Not Allowed
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     } else {
         parseEndDate = new Date(enddate); //moment.ISO_8601
         if (!(parseEndDate instanceof Date && !isNaN(parseEndDate))) { // check valid date        
             res.status(400).send('{code: 400, message: "Bad Request"}');
-            return;
+            
         }
     }
     
@@ -64,7 +64,7 @@ exports.get_data_queryable = function(req, res, next) {
     if (!clazz) { 
         //  response based on status - 400 Bad Request or 402 Required id        
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     }
 
     // concat app and data identifier examplary id: "prodes_amazon_rates"
@@ -109,7 +109,7 @@ exports.get_data_all = function(req, res, next) {
     let appId = api_calls.check_app_identifier(req, res, next);
     if (!appId) {
         res.status(404).send('{code: 404, message: "Not Found"}');
-        return;
+        
     }
         
     // get data identifier from request
@@ -118,7 +118,7 @@ exports.get_data_all = function(req, res, next) {
     if (!dataId) { 
         //  response based on status - 400 Bad Request or 402 Required id        
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     }
 
     // concat app and data identifier examplary id: "prodes_amazon_rates"
@@ -162,7 +162,7 @@ exports.post_data_all = function(req, res, next) {
     // get header from app
     let appId = api_calls.check_app_identifier(req, res, next);
     if (!appId)
-        return; 
+        res.status(404).send('{code: 404, message: "Not Found"}');
 
     // get data identifier from request
     let dataId = req.params.dataId;
@@ -170,7 +170,7 @@ exports.post_data_all = function(req, res, next) {
     if (!dataId) { 
         //  response based on status - 400 Bad Request or 402 Required id        
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     }
 
     // concat app and data identifier examplary id: "prodes_amazon_rates"
@@ -181,7 +181,7 @@ exports.post_data_all = function(req, res, next) {
         if(err)
             res.status(400).send('{code: 400, message: "Bad Request"}');
         else
-           res.status(200).send('{code: 200, message: "OK"}');  
+            res.status(200).send('{code: 200, message: "OK"}');  
       });
 
       
@@ -194,7 +194,7 @@ exports.del_data_all = function(req, res, next) {
     // get header from app
     let appId = api_calls.check_app_identifier(req, res, next);
     if (!appId)
-        return; 
+        res.status(404).send('{code: 404, message: "Not Found"}');
 
     // get data identifier from request
     let dataId = req.params.data_id;
@@ -202,7 +202,7 @@ exports.del_data_all = function(req, res, next) {
     if (!dataId) { 
         //  response based on status - 400 Bad Request or 402 Required id        
         res.status(400).send('{code: 400, message: "Bad Request"}');
-        return;
+        
     }
 
     // concat app and data identifier examplary id: "prodes_amazon_rates"
@@ -213,7 +213,7 @@ exports.del_data_all = function(req, res, next) {
         if(err)
             res.status(400).send('{code: 400, message: "Bad Request"}');
         else
-           res.status(200).send('{code: 200, message: "OK"}');  
+            res.status(200).send('{code: 200, message: "OK"}');  
       });
 
 }
