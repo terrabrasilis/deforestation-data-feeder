@@ -1,13 +1,11 @@
 // load required packages
-const fs = require('fs') // require fs
 const redis_node = require('redis'); // in-memory database
 rejson         = require('redis-rejson'); // manipulating json in redis
-
 rejson(redis_node);
 
-// read redis host and port from secrets
-var host = process.env.DASHBOARD_API_REDIS_HOST;
-var port = process.env.DASHBOARD_API_REDIS_PORT;
+// redis host and port from env or default
+var host = process.env.REDIS_HOSTNAME || 'redis';
+var port = process.env.REDIS_PORT || 6379;
 
 // redis_node
 var client = redis_node.createClient(port, host); 

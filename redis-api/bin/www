@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 var app = require('../server');
 
-app.set('port', process.env.DASHBOARD_API_PORT);
+app.set('port', process.env.API_PORT || 3000);
 
 app.listen(app.get('port'), function(){
   console.log('RESTful API server started on: ' + app.get('port'));

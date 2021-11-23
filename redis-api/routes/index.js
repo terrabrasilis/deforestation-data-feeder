@@ -24,15 +24,6 @@ router.get('/', function(req, res, next) {
 
 });
 
-// define api for data
-router.use(version+'/redis-cli/data/', data_wrapper.get_apps_ids);
-
-router.get(version+'/redis-cli/data/:dataId', data_wrapper.get_data_all);
-
-router.post(version+'/redis-cli/data/:dataId', data_wrapper.post_data_all);
-
-router.delete(version+'/redis-cli/data/:dataId', data_wrapper.del_data_all);
-
 // define api for apps identifier
 router.get(version+'/redis-cli/apps/identifier', apps_wrapper.get_apps_ids);
 
@@ -40,14 +31,28 @@ router.post(version+'/redis-cli/apps/identifier', apps_wrapper.post_apps_ids);
 
 router.delete(version+'/redis-cli/apps/identifier', apps_wrapper.del_apps_ids);
 
+// define api for data
+router.use(version+'/redis-cli/data/', data_wrapper.get_apps_ids);
+
+router.use(version+'/redis-cli/data/query', data_wrapper.get_data_queryable);
+
+router.post(version+'/redis-cli/data/:dataId', data_wrapper.post_data_all);
+
+router.delete(version+'/redis-cli/data/:dataId', data_wrapper.del_data_all);
+
+// version+'/redis-cli/query?data=:dataId&loiname_id=:loinameId&startDate=:startDate&endDate=:endDate
+router.get(version+'/redis-cli/data/:dataId/:loinameId', data_wrapper.get_data_all);
+
 // define api for config files
+router.use(version+'/redis-cli/config/', config_wrapper.get_apps_ids);
+
+router.use(version+'/redis-cli/config/query/loinames', config_wrapper.get_loinames_queryable);
+
 router.get(version+'/redis-cli/config/:configId', config_wrapper.get_config_ids);
 
 router.post(version+'/redis-cli/config/:configId', config_wrapper.post_config_ids);
 
 router.delete(version+'/redis-cli/config/:configId', config_wrapper.del_config_ids);
-
-// TODO routes?start=...&end=...&class=
 
 // export router
 module.exports = router;
