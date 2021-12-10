@@ -2,7 +2,8 @@
 FROM node:latest
 
 # adds maintainer metadata as a key-value pair
-LABEL mantainer="Luiz Fernando Assis <luizffga@dpi.inpe.br>"
+LABEL author="Luiz Fernando Assis <luizffga@dpi.inpe.br>"
+LABEL mantainer="Andre Carvalho <andre.carvalho@inpe.br>"
 
 # executes create directory of the src in a new layer on top of the current image and commit the results
 RUN mkdir -p /usr/src/

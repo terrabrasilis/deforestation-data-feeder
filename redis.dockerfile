@@ -3,7 +3,8 @@ FROM redislabs/rejson:latest AS rejson
 FROM redis:latest as redis
 
 # adds maintainer metadata as a key-value pair
-LABEL mantainer="Luiz Fernando Assis <luizffga@dpi.inpe.br>"
+LABEL author="Luiz Fernando Assis <luizffga@dpi.inpe.br>"
+LABEL mantainer="Andre Carvalho <andre.carvalho@inpe.br>"
 
 # sets the environment variable LIBDIR
 ENV LIBDIR /usr/lib/redis/modules
@@ -12,7 +13,7 @@ ENV LIBDIR /usr/lib/redis/modules
 WORKDIR /data
 
 # executes setting of shell exit in case of any subcommand or pipeline returns a non-zero status
-RUN set -ex;\ 
+RUN set -ex;\
     mkdir -p ${LIBDIR};
 
 # copies rejson and adds them to the filesystem of the container at the defined path
