@@ -1,6 +1,6 @@
 version: '3.3'
 services:
-  redis:
+  redisdb:
     image: terrabrasilis/redis:v01
     container_name: redisdb
     ports:
@@ -14,15 +14,18 @@ services:
     ports:
       - "3000:3000"
     links:
-      - redis
+      - redisdb
     restart: always
+    environment:
+      - REDIS_HOSTNAME=192.168.15.49
+      - REDIS_PORT_6379_TCP_ADDR=192.168.15.49
+      - REDIS_PORT=6379
+      - REDIS_PORT_6379_TCP_PORT=6379
     # environment:
     #   DASHBOARD_API_PORT: 3000
     #   DASHBOARD_API_REDIS_HOST: redisdb
     #   DASHBOARD_API_REDIS_PORT: 6379
-    # environment:
-    #   - REDIS_HOST=redis
-    #   - REDIS_PORT=6379
+    
 
   #The new version 1.1.0 is used to push only once to redisdb and do not use filters
   redis-feeder:
