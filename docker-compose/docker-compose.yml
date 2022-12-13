@@ -38,4 +38,3 @@ services:
   #     - "8090:8080"
   #   environment:
   #     - "HOST_REDIS_API=http://192.168.15.49:3000"
-      #- "SPRING_PROFILES_ACTIVE=prod"
