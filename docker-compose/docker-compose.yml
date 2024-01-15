@@ -10,31 +10,42 @@ services:
       - "/home/andre/Dados/tmp/redisdb:/data"
 
   redis-api:
-    image: terrabrasilis/redis-api:v01
+    image: terrabrasilis/redis-api:v1.1.3
     container_name: redisapi
     ports:
       - "3000:3000"
     links:
       - redisdb
     restart: always
+    extra_hosts:
+      # roça home
+      - "local-ip:192.168.1.22"
+      # SJC home
+      #- "local-ip:192.168.15.49"
+      # SJC INPE
+      #- "local-ip:150.163.17.103"
     environment:
-      - REDIS_HOSTNAME=192.168.15.49
-      - REDIS_PORT_6379_TCP_ADDR=192.168.15.49
       - REDIS_PORT=6379
       - REDIS_PORT_6379_TCP_PORT=6379
-    # environment:
-    #   DASHBOARD_API_PORT: 3000
-    #   DASHBOARD_API_REDIS_HOST: redisdb
-    #   DASHBOARD_API_REDIS_PORT: 6379
-    
+      # from /etc/hosts inside container via extra_hosts
+      - REDIS_HOSTNAME=local-ip
+      - REDIS_PORT_6379_TCP_ADDR=local-ip    
 
   # The new version 1.1.0 is used to push only once to redisdb and do not use filters
   # redis-feeder:
-  #   image: terrabrasilis/redis-feeder:v1.1.0
+  #   image: terrabrasilis/redis-feeder:v1.1.3
   #   container_name: feeder
   #   links:
   #     - redis-api
   #   ports:
   #     - "8090:8080"
+  #   extra_hosts:
+  #     # roça home
+  #     - "local-ip:192.168.1.22"
+  #     # SJC home
+  #     #- "local-ip:192.168.15.49"
+  #     # SJC INPE
+  #     #- "local-ip:150.163.17.103"
   #   environment:
-  #     - "HOST_REDIS_API=http://192.168.15.49:3000"
+  #     # from /etc/hosts inside container via extra_hosts
+  #     - "HOST_REDIS_API=http://local-ip:3000"
