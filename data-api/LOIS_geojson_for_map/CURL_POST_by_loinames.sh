@@ -28,6 +28,17 @@ curl -X POST -d @amazon_consunit.json http://localhost:3000/dashboard/api/v1/red
 
 curl -X POST -d @amazon_indi.json http://localhost:3000/dashboard/api/v1/redis-cli/config/indi -H "App-Identifier:prodes_amazon" -H "Content-Type: application/json"
 
+# AMAZON NF
+
+curl -X POST -d @amazon_nf_uf.json http://localhost:3000/dashboard/api/v1/redis-cli/config/uf -H "App-Identifier:prodes_amazon_nf" -H "Content-Type: application/json"
+
+curl -X POST -d @amazon_nf_mun.json http://localhost:3000/dashboard/api/v1/redis-cli/config/mun -H "App-Identifier:prodes_amazon_nf" -H "Content-Type: application/json"
+
+curl -X POST -d @amazon_nf_consunit.json http://localhost:3000/dashboard/api/v1/redis-cli/config/consunit -H "App-Identifier:prodes_amazon_nf" -H "Content-Type: application/json"
+
+curl -X POST -d @amazon_nf_indi.json http://localhost:3000/dashboard/api/v1/redis-cli/config/indi -H "App-Identifier:prodes_amazon_nf" -H "Content-Type: application/json"
+
+
 # CAATINGA
 
 curl -X POST -d @caatinga_uf.json http://localhost:3000/dashboard/api/v1/redis-cli/config/uf -H "App-Identifier:prodes_caatinga" -H "Content-Type: application/json"
