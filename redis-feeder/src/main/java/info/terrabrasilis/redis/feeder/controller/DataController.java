@@ -1,8 +1,9 @@
 package info.terrabrasilis.redis.feeder.controller;
 
 import static info.terrabrasilis.redis.feeder.util.Constants.DATA;
-import static info.terrabrasilis.redis.feeder.util.Constants.DATA_LOI;
-import static info.terrabrasilis.redis.feeder.util.Constants.DATA_FILTER;
+import static info.terrabrasilis.redis.feeder.util.Constants.CONFIG_URI;
+import static info.terrabrasilis.redis.feeder.util.Constants.DATA_PATH;
+import static info.terrabrasilis.redis.feeder.util.Constants.CONFIG_PATH;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -67,9 +68,9 @@ public class DataController implements Serializable {
 	
 	@Autowired @Qualifier("dataPostInRedisCliApi") private final Writable writable;
         // try write to disk
-        //@Autowired @Qualifier("dataWriteJsonInDisk") private final Writable writable;
+        @Autowired @Qualifier("dataWriteJsonInDisk") private final Writable diskwriter;
 
-        public DataController(DataService dataService, PeriodService periodService, FeatureVOService featureVOService, DataClazzService dataClassService, LoiVOService loiVOService, LoinamesVOService loinamesVOService, DataClazzService dataClazzService, Writable writable, FilterVOService filterVOService) {
+        public DataController(DataService dataService, PeriodService periodService, FeatureVOService featureVOService, DataClazzService dataClassService, LoiVOService loiVOService, LoinamesVOService loinamesVOService, DataClazzService dataClazzService, Writable writable, Writable diskwriter, FilterVOService filterVOService) {
             this.dataService = dataService;
             this.periodService = periodService;
             this.featureVOService = featureVOService;
@@ -78,6 +79,7 @@ public class DataController implements Serializable {
             this.loinamesVOService = loinamesVOService;
             this.dataClazzService = dataClazzService;
             this.writable = writable;
+            this.diskwriter = diskwriter;
             this.filterVOService = filterVOService;
         }
 
@@ -95,7 +97,8 @@ public class DataController implements Serializable {
                     });
 
                     try {
-                            writable.write(DataClassVO.of(data, classes), DATA_LOI + "classes", data.getName().replaceAll(" ", "_").toLowerCase());
+                            writable.write(DataClassVO.of(data, classes), CONFIG_URI + "classes", data.getName().replaceAll(" ", "_").toLowerCase());
+                            diskwriter.write(DataClassVO.of(data, classes), CONFIG_PATH + "classes", data.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
                     }
@@ -117,7 +120,8 @@ public class DataController implements Serializable {
                                                                             return PeriodVO.of(p.getStartDate(), p.getEndDate(), Collections.emptyList());
                                                                     }).collect(Collectors.toList());
                     try {
-                            writable.write(DataPeriodVO.of(data, periods), DATA_LOI + "periods", data.getName().replaceAll(" ", "_").toLowerCase());
+                            writable.write(DataPeriodVO.of(data, periods), CONFIG_URI + "periods", data.getName().replaceAll(" ", "_").toLowerCase());
+                            diskwriter.write(DataPeriodVO.of(data, periods), CONFIG_PATH + "periods", data.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
                     }
@@ -127,18 +131,17 @@ public class DataController implements Serializable {
 	}
 	
 	/**
-	 * This service will post DATA_LOI in REDIS by API
+	 * This service will post CONFIG_URI in REDIS by API
 	 */
         //@Scheduled(cron = "0 12 20 * * *")
 	public void redisDataLoisFeeder() {
             LOGGER.info("Starting RedisDataLoisFeeder: {}", LocalDateTime.now());
 
             dataService.findAll().forEach(data -> {						
-                    try {				
-                            writable.write(DataLoisVO.of(
-                                            data
-                                            , loiVOService.findAllByData(data.getId())), DATA_LOI + "lois"
-                                            , data.getName().replaceAll(" ", "_").toLowerCase());
+                    try {
+                        DataLoisVO dtlois = DataLoisVO.of(data, loiVOService.findAllByData(data.getId()));
+                        writable.write(dtlois, CONFIG_URI + "lois", data.getName().replaceAll(" ", "_").toLowerCase());
+                        diskwriter.write(dtlois, CONFIG_PATH + "lois", data.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
                     }
@@ -148,7 +151,7 @@ public class DataController implements Serializable {
 	}
 	
 	/**
-	 * This service will post DATA_LOI_LOINAMES in REDIS by API
+	 * This service will post loinames to CONFIG_URI in REDIS by API
 	 */
         //@Scheduled(cron = "0 15 20 * * *")
 	public void redisDataLoiLoinamesFeeder() {
@@ -162,7 +165,8 @@ public class DataController implements Serializable {
                     });		
 
                     try {
-                            writable.write(DataLoiLoinamesVO.of(data, lois), DATA_LOI + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
+                            writable.write(DataLoiLoinamesVO.of(data, lois), CONFIG_URI + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
+                            diskwriter.write(data, CONFIG_PATH + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
                     }
@@ -172,7 +176,7 @@ public class DataController implements Serializable {
 	}
         
         /**
-	 * This service will post DATA_FILTERS in REDIS by API
+	 * This service will post CONFIG_URI in REDIS by API
 	 */
         //@Scheduled(cron = "0 18 20 * * *")
         public void redisDataFilter() {
@@ -180,13 +184,14 @@ public class DataController implements Serializable {
             
             dataService.findAll().forEach(data -> {
                 try {
-                    writable.write(DataFilterVO.of(data, filterVOService.findAllByData(data.getId())), DATA_FILTER + "filters", data.getName().replaceAll(" ", "_").toLowerCase());
+                    writable.write(DataFilterVO.of(data, filterVOService.findAllByData(data.getId())), CONFIG_URI + "filters", data.getName().replaceAll(" ", "_").toLowerCase());
+                    diskwriter.write(data, CONFIG_PATH + "filters", data.getName().replaceAll(" ", "_").toLowerCase());
                 } catch (Exception e) {
                     LOGGER.error("Error: {}", e.getMessage());
                 }
             });
             
-            LOGGER.info("Starting RedisDataFilter: {}", LocalDateTime.now());
+            LOGGER.info("Finishing RedisDataFilter: {}", LocalDateTime.now());
         }
 
 	/**
@@ -219,6 +224,7 @@ public class DataController implements Serializable {
             datas.forEach(d -> {
                     try {
                             writable.write(d, DATA + d.getClazz().toLowerCase(), d.getName().replaceAll(" ", "_").toLowerCase());
+                            diskwriter.write(d, DATA_PATH, d.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
                     }			

@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
 
+import static info.terrabrasilis.redis.feeder.util.Constants.JSON_BASE_PATH;
+
 import info.terrabrasilis.redis.feeder.interfaces.Writable;
 
 /**
@@ -35,12 +37,17 @@ public class DataWriteJsonInDisk implements Writable, Serializable {
 		logger.info("Start write json in disk: {}", LocalDateTime.now());
 		
 		StringBuilder builder = new StringBuilder();
-		// builder.append(System.getProperty("java.io.tmpdir"))
-		builder.append("/tmp/")
+		builder.append(JSON_BASE_PATH)
 			   .append(File.separator)
 			   .append(String.join(".", key, "json"));
 		
 		File json = new File(builder.toString());
+
+		try {
+        	json.getParentFile().mkdirs();
+		} catch (Exception e) {
+			logger.error("Error on create dirs: {}", e.getMessage());
+		}
 		
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(json))) {
 			writer.write(new Gson().toJson(data));	
@@ -52,17 +59,23 @@ public class DataWriteJsonInDisk implements Writable, Serializable {
 	}
 
 	@Override
-	public void write(Object data, String host, String key) {
+	public void write(Object data, String location, String key) {
 		logger.info("Start write json in disk: {}", LocalDateTime.now());
 		
 		StringBuilder builder = new StringBuilder();
-		// builder.append(System.getProperty("java.io.tmpdir"))
-		builder.append("/tmp/")
-				.append(host)
+		builder.append(JSON_BASE_PATH)
+				.append(File.separator)
+				.append(location)
 				.append(File.separator)
 				.append(String.join(".", key, "json"));
 		
 		File json = new File(builder.toString());
+
+		try {
+        	json.getParentFile().mkdirs();
+		} catch (Exception e) {
+			logger.error("Error on create dirs: {}", e.getMessage());
+		}
 		
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(json))) {
 			writer.write(new Gson().toJson(data));	

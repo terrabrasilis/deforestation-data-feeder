@@ -78,3 +78,4 @@ curl -X POST -d @pantanal_mun.json http://localhost:3000/dashboard/api/v1/redis-
 curl -X POST -d @pantanal_consunit.json http://localhost:3000/dashboard/api/v1/redis-cli/config/consunit -H "App-Identifier:prodes_pantanal" -H "Content-Type: application/json"
 
 curl -X POST -d @pantanal_indi.json http://localhost:3000/dashboard/api/v1/redis-cli/config/indi -H "App-Identifier:prodes_pantanal" -H "Content-Type: application/json"
+
