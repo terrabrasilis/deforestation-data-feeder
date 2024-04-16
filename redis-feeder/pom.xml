@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>info.terrabrasilis.redis.feeder</groupId>
 	<artifactId>redis-feeder</artifactId>
-	<version>v1.1.4</version>
+	<version>v1.1.5</version>
 
 	<!-- https://spring.io/guides/gs/spring-boot-docker/ -->
 	<parent>
