@@ -32,25 +32,25 @@ services:
       - REDIS_PORT_6379_TCP_ADDR=local-ip    
 
   # The new version 1.1.0 is used to push only once to redisdb and do not use filters
-  redis-feeder:
-    image: terrabrasilis/redis-feeder:v1.1.5
-    container_name: feeder
-    links:
-      - redis-api
-    ports:
-      - "8090:8080"
-    volumes:
-      # used to write json files
-      - "/home/andre/Dados/tmp/feeder:/files"
-    extra_hosts:
-      # roça home
-      #- "local-ip:192.168.1.22"
-      # SJC home
-      - "local-ip:192.168.15.49"
-      # SJC INPE
-      #- "local-ip:150.163.17.103"
-    environment:
-      # location to store json files
-      - "JSON_BASE_PATH=/files"
-      # from /etc/hosts inside container via extra_hosts
-      - "HOST_REDIS_API=http://local-ip:3000"
+  # redis-feeder:
+  #   image: terrabrasilis/redis-feeder:v1.1.5
+  #   container_name: feeder
+  #   links:
+  #     - redis-api
+  #   ports:
+  #     - "8090:8080"
+  #   volumes:
+  #     # used to write json files
+  #     - "/home/andre/Dados/tmp/feeder:/files"
+  #   extra_hosts:
+  #     # roça home
+  #     #- "local-ip:192.168.1.22"
+  #     # SJC home
+  #     - "local-ip:192.168.15.49"
+  #     # SJC INPE
+  #     #- "local-ip:150.163.17.103"
+  #   environment:
+  #     # location to store json files
+  #     - "JSON_BASE_PATH=/files"
+  #     # from /etc/hosts inside container via extra_hosts
+  #     - "HOST_REDIS_API=http://local-ip:3000"

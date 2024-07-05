@@ -12,7 +12,7 @@ for ((j=0; j<$length_j; ++j));
 do
 
     docker-compose -f ${DATA_DIR}/../../docker-compose/docker-compose.yml up -d
-    sleep 10
+    sleep 7
 
     # The name for each LOI in config API
     CONFIG_LOIS=("uf" "mun" "consunit" "indi")
