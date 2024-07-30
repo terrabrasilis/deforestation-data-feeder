@@ -10,7 +10,7 @@ services:
       - "/home/andre/Dados/tmp/redisdb:/data"
 
   redis-api:
-    image: terrabrasilis/redis-api:v01
+    image: terrabrasilis/redis-api:v1.1.5
     container_name: redisapi
     ports:
       - "3000:3000"
@@ -25,11 +25,10 @@ services:
       # SJC INPE
       #- "local-ip:150.163.17.103"
     environment:
+      - READ_ONLY=no
       - REDIS_PORT=6379
-      - REDIS_PORT_6379_TCP_PORT=6379
       # from /etc/hosts inside container via extra_hosts
       - REDIS_HOSTNAME=local-ip
-      - REDIS_PORT_6379_TCP_ADDR=local-ip    
 
   # The new version 1.1.0 is used to push only once to redisdb and do not use filters
   # redis-feeder:

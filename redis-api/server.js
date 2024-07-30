@@ -9,12 +9,12 @@ var routes = require('./routes/index');
 var app = express();
 
 // define parameters for api
-app.use(express.json({limit: '100mb'}));
+app.use(express.json({limit: '1mb'}));
 app.use(compression());
 
 // add headers
-app.use(function(req, res, next) {    
-    
+app.use(function(req, res, next) {
+
     // set response header
     res.setHeader('Content-Type', 'application/json');
     res.setHeader('Access-Control-Allow-Origin', '*');

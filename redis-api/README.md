@@ -2,6 +2,8 @@
 
 An API to read and write deforestation data to the REDIS database instance.
 
+When we need to prepare a new REDIS data file, for publish time, set the READ_ONLY environment variable to 'no' ( Ex.: READ_ONLY=no ). In this scenario, the POST and DELETE endpoints will be enabled to allow data modification.
+
 # Create a docker image
 
 Use redis-api.dockerfile and build-redis-api.sh to build a docker image for deployment.
@@ -28,6 +30,7 @@ Optionally use the API_PORT environment variable to set the API port to expose t
 
 ```yaml
     environment:
+      - READ_ONLY=yes
       - REDIS_HOSTNAME=redisdb
       - REDIS_PORT=6379
       - API_PORT=3000

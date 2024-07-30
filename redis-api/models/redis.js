@@ -4,7 +4,7 @@ rejson         = require('redis-rejson'); // manipulating json in redis
 rejson(redis_node);
 
 // redis host and port from env or default
-var host = process.env.REDIS_HOSTNAME || 'redis';
+var host = process.env.REDIS_HOSTNAME || 'redisdb';
 var port = process.env.REDIS_PORT || 6379;
 
 // redis_node
