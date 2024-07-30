@@ -10,7 +10,7 @@ services:
       - "/home/andre/Dados/tmp/redisdb:/data"
 
   redis-api:
-    image: terrabrasilis/redis-api:v1.1.5
+    image: terrabrasilis/redis-api:v1.2.0
     container_name: redisapi
     ports:
       - "3000:3000"
