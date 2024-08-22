@@ -97,7 +97,7 @@ public class DataController implements Serializable {
                     });
 
                     try {
-                            writable.write(DataClassVO.of(data, classes), CONFIG_URI + "classes", data.getName().replaceAll(" ", "_").toLowerCase());
+                            // writable.write(DataClassVO.of(data, classes), CONFIG_URI + "classes", data.getName().replaceAll(" ", "_").toLowerCase());
                             diskwriter.write(DataClassVO.of(data, classes), CONFIG_PATH + "classes", data.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
@@ -120,7 +120,7 @@ public class DataController implements Serializable {
                                                                             return PeriodVO.of(p.getStartDate(), p.getEndDate(), Collections.emptyList());
                                                                     }).collect(Collectors.toList());
                     try {
-                            writable.write(DataPeriodVO.of(data, periods), CONFIG_URI + "periods", data.getName().replaceAll(" ", "_").toLowerCase());
+                            // writable.write(DataPeriodVO.of(data, periods), CONFIG_URI + "periods", data.getName().replaceAll(" ", "_").toLowerCase());
                             diskwriter.write(DataPeriodVO.of(data, periods), CONFIG_PATH + "periods", data.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
@@ -140,7 +140,7 @@ public class DataController implements Serializable {
             dataService.findAll().forEach(data -> {						
                     try {
                         DataLoisVO dtlois = DataLoisVO.of(data, loiVOService.findAllByData(data.getId()));
-                        writable.write(dtlois, CONFIG_URI + "lois", data.getName().replaceAll(" ", "_").toLowerCase());
+                        // writable.write(dtlois, CONFIG_URI + "lois", data.getName().replaceAll(" ", "_").toLowerCase());
                         diskwriter.write(dtlois, CONFIG_PATH + "lois", data.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
@@ -165,8 +165,8 @@ public class DataController implements Serializable {
                     });		
 
                     try {
-                            writable.write(DataLoiLoinamesVO.of(data, lois), CONFIG_URI + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
-                            diskwriter.write(data, CONFIG_PATH + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
+                            // writable.write(DataLoiLoinamesVO.of(data, lois), CONFIG_URI + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
+                            diskwriter.write(DataLoiLoinamesVO.of(data, lois), CONFIG_PATH + "loinames", data.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
                     }
@@ -184,7 +184,7 @@ public class DataController implements Serializable {
             
             dataService.findAll().forEach(data -> {
                 try {
-                    writable.write(DataFilterVO.of(data, filterVOService.findAllByData(data.getId())), CONFIG_URI + "filters", data.getName().replaceAll(" ", "_").toLowerCase());
+                    // writable.write(DataFilterVO.of(data, filterVOService.findAllByData(data.getId())), CONFIG_URI + "filters", data.getName().replaceAll(" ", "_").toLowerCase());
                     diskwriter.write(data, CONFIG_PATH + "filters", data.getName().replaceAll(" ", "_").toLowerCase());
                 } catch (Exception e) {
                     LOGGER.error("Error: {}", e.getMessage());
@@ -223,7 +223,7 @@ public class DataController implements Serializable {
 
             datas.forEach(d -> {
                     try {
-                            writable.write(d, DATA + d.getClazz().toLowerCase(), d.getName().replaceAll(" ", "_").toLowerCase());
+                            // writable.write(d, DATA + d.getClazz().toLowerCase(), d.getName().replaceAll(" ", "_").toLowerCase());
                             diskwriter.write(d, DATA_PATH, d.getName().replaceAll(" ", "_").toLowerCase());
                     } catch (Exception e) {
                             LOGGER.error("Error: {}", e.getMessage());
