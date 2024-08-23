@@ -34,3 +34,8 @@ When you see the message below, all data is in the redis, if no error occured, o
 ```
 Started RedisFeederApplication in 629.995 seconds (JVM running for ...
 ```
+
+## How to publish
+
+Copy the output directory to the server and place it in the location that NGINX uses as the root directory. Ensuring that the path is set correctly as required by the deforestation dashboard.
+

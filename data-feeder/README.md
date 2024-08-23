@@ -1,6 +1,6 @@
 # FEEDER for DATA
 
-To read about how to update data for publishing on the server behind an nginx. See [UPDATE-DATA.md](UPDATE-DATA.md).
+To read about how to export data for publishing on the server behind an nginx. See [EXPORT-DATA.md](../EXPORT-DATA.md).
 
 This README helps how to configure feeder to build a image.
 
