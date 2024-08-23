@@ -1,9 +1,9 @@
 version: '3.3'
 services:
 
-  # The new version 1.2.0 is used only to write files to disc.
+  # The new version 1.2.1 is used only to write files to disc.
   redis-feeder:
-    image: terrabrasilis/data-feeder:v1.2.0
+    image: terrabrasilis/data-feeder:v1.2.1
     container_name: feeder
     volumes:
       # used to write json files

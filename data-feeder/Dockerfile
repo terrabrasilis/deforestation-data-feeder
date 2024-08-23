@@ -11,6 +11,6 @@ ENV TZ=America/Sao_Paulo
 VOLUME /tmp
 
 ARG JAR_FILE
-COPY ${JAR_FILE} redis-feeder.jar
+COPY ${JAR_FILE} data-feeder.jar
 
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-Dfile.encoding=UTF-8", "-jar","/redis-feeder.jar"]
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom", "-Dfile.encoding=UTF-8", "-jar","/data-feeder.jar"]
