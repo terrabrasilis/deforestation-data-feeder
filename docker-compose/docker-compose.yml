@@ -3,18 +3,14 @@ services:
 
   # The new version 1.2.0 is used only to write files to disc.
   redis-feeder:
-    image: terrabrasilis/redis-feeder:v1.2.0
+    image: terrabrasilis/data-feeder:v1.2.0
     container_name: feeder
     volumes:
       # used to write json files
-      - "/home/andre/Dados/tmp/feeder:/files"
+      - "./output:/files"
     extra_hosts:
-      # roça home
-      #- "local-ip:192.168.1.22"
-      # SJC home
-      - "local-ip:192.168.15.49"
-      # SJC INPE
-      #- "local-ip:150.163.17.103"
+      # The IP of the Postgres where dashboarddatamodel is
+      - "postgres-host:192.168.15.49"
     environment:
       # location to store json files
       - "JSON_BASE_PATH=/files"
