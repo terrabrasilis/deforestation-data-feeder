@@ -1,6 +1,6 @@
 package info.terrabrasilis.redis.feeder;
 
-import info.terrabrasilis.redis.feeder.controller.RedisController;
+//import info.terrabrasilis.redis.feeder.controller.RedisController;
 import info.terrabrasilis.redis.feeder.controller.DataController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -26,13 +26,14 @@ import javax.annotation.PostConstruct;
 })
 public class RedisFeederApplication extends SpringBootServletInitializer{
 
-  @Autowired private final RedisController redisController;
+    // @Autowired private final RedisController redisController;
 	@Autowired private final DataController dataController;
 
-	public RedisFeederApplication(RedisController redisController, DataController dataController) {
+	// public RedisFeederApplication(RedisController redisController, DataController dataController) {
+	public RedisFeederApplication(DataController dataController) {
 		super();
 		this.dataController=dataController;
-		this.redisController=redisController;
+		//this.redisController=redisController;
 	}
 
 	@Override
@@ -46,7 +47,7 @@ public class RedisFeederApplication extends SpringBootServletInitializer{
 
 	@PostConstruct
 	private void init() {
-		this.redisController.findAllApplicationAndPopulateInRedis();
+		//this.redisController.findAllApplicationAndPopulateInRedis();
 		this.dataController.redisDataClassFeeder();
 		this.dataController.redisDataPeriodFeeder();
 		this.dataController.redisDataLoisFeeder();
