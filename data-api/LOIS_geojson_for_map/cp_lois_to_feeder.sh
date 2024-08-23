@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 DATA_DIR=`pwd`
+# Same dir used in feeder process. See docker-compose stack to use the same basedir.
+DIR_OUT='/home/andre/Dados/tmp/feeder'
 #
 # list of locations for each JSON LOIs
 BASE_LOIS=("cerrado" "amazonia_legal" "amazonia" "caatinga" "pampa" "pantanal" "mata_atlantica" "amazonia_nf")
@@ -10,10 +12,6 @@ APP_ID_LOIS=("cerrado" "legal_amazon" "amazon" "caatinga" "pampa" "pantanal" "ma
 length_j=${#BASE_LOIS[@]}
 for ((j=0; j<$length_j; ++j));
 do
-
-    docker-compose -f ${DATA_DIR}/../../docker-compose/docker-compose.yml up -d
-    sleep 7
-
     # The name for each LOI in config API
     CONFIG_LOIS=("uf" "mun" "consunit" "indi")
     # The name for each JSON file LOI
@@ -22,12 +20,12 @@ do
     length=${#CONFIG_LOIS[@]}
     for ((i=0; i<$length; ++i));
     do
-        curl -X POST -d @${BASE_LOIS[$j]}/${JSON_LOIS[$i]}.json http://localhost:3000/dashboard/api/v1/redis-cli/config/${CONFIG_LOIS[$i]} \
-        -H "App-Identifier:prodes_${APP_ID_LOIS[$j]}" -H "Content-Type: application/json"
-        
-        sleep 2
+        if [[ ! -d "${DIR_OUT}/config/${CONFIG_LOIS[$i]}" ]]; then
+            mkdir ${DIR_OUT}/config/${CONFIG_LOIS[$i]}
+        fi;
+        cp ${BASE_LOIS[$j]}/${JSON_LOIS[$i]}.json ${DIR_OUT}/config/${CONFIG_LOIS[$i]}/prodes_${APP_ID_LOIS[$j]}.json
+
     done
 
-    docker-compose -f ${DATA_DIR}/../../docker-compose/docker-compose.yml down
 
 done
