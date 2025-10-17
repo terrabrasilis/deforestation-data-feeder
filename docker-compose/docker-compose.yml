@@ -10,7 +10,7 @@ services:
       - "./output:/files"
     extra_hosts:
       # The IP of the Postgres where dashboarddatamodel is
-      - "postgres-host:192.168.15.49"
+      - "postgres-host:192.168.15.9"
     environment:
       # location to store json files
       - "JSON_BASE_PATH=/files"
