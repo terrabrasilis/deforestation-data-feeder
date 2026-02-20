@@ -20,7 +20,10 @@ This same script will copy lois to the output directory structure as well.
  > Go to the /docker-compose/ directory into root of this project and run the docker-compose file;
 
 ```sh
-docker-compose up -d
+# to start process
+docker compose -f docker-compose.yml up -d
+# to stop process
+docker compose -f docker-compose.yml down
 ```
 
  > Wait until the feeder places all the data in the respective directories;
