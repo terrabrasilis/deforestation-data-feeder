@@ -1,16 +1,15 @@
-version: '3.3'
 services:
 
   # The new version 1.2.1 is used only to write files to disc.
   redis-feeder:
-    image: terrabrasilis/data-feeder:v1.2.1
+    image: terrabrasilis/data-feeder:v1.2.2
     container_name: feeder
     volumes:
       # used to write json files
       - "./output:/files"
     extra_hosts:
       # The IP of the Postgres where dashboarddatamodel is
-      - "postgres-host:192.168.15.9"
+      - "postgres-host:150.163.17.4"
     environment:
       # location to store json files
       - "JSON_BASE_PATH=/files"
